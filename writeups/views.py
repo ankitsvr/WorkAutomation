@@ -1,15 +1,21 @@
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound
 # Create your views here.
 
 
-   
-def blog(request,blog_page):
-    page_content = None
-    if blog_page == "ddos":
-        page_content="this will return DDOS blogs"
-    elif blog_page == "layer 7 attack":
-        page_content="This will return any general cybersecurity attack blogs"
-    else:
-        return HttpResponseNotFound("This page is not found") 
-    return HttpResponse(page_content)
+blogs_list = {
+    1: "ddos",
+    2: "L3",
+    3: "L2",
+    4: "Tls Fingerprints",
+    5: "Bot Attack",
+}
+
+
+def blog(request, blog_page):
+    try:
+        page_content = blogs_list[blog_page]
+        return HttpResponse(page_content)
+
+    except:
+        return HttpResponseNotFound("this blog is not found")
